@@ -1,15 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="library">
 	<head>
 		<title>My Library</title>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/style.css">
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+		<script src="/js/main.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<div class="page-header">
 				<h1>Hello</h1>
 			</div>
+				<div ng-controller="lookup">
+					<form action="" ng-submit="lookupISBN()" name="ISBNLookupForm">
+						<label for="">Lookup ISBN</label>
+						<input type="text" name="ISBN">
+					</form>
+					<div class="row">
+						<div class="clearfix"></div>
+						<div class="pull-left">
+							<img src="{{book.imageLinks.thumbnail}}" alt="">
+						</div>
+						<div>
+							<p>Title</p>
+							<p>{{book.title}}</p>
+						</div>
+						<div>
+							<p>Author(s)</p>
+							<ul class="unstyled">
+								<li ng-repeat="author in book.authors">{{author}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			
 		</div>
 	</body>
 </html>

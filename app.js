@@ -15,7 +15,7 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.bodyParser());
 
-  app.use(express.cookieParser(config.sessionSecret));  
+  app.use(express.cookieParser(config.sessionSecret || "Hallo"));  
   app.use(express.session({store: new RedisStore()}));
   app.use(flash());
 });
