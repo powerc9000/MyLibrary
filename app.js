@@ -7,17 +7,17 @@ var flash = require('connect-flash');
 var config = require("./config")
 var bcrypt = require("bcrypt");
 app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.engine("html", require("ejs").renderFile);
-  app.set("view options", {layout:false});
-  app.use(express.static(__dirname + "/public"));
-  app.use(express.favicon());
-  app.use(express.bodyParser());
+	app.set('views', __dirname + '/views');
+	app.set('view engine', 'ejs');
+	app.engine("html", require("ejs").renderFile);
+	app.set("view options", {layout:false});
+	app.use(express.static(__dirname + "/public"));
+	app.use(express.favicon());
+	app.use(express.bodyParser());
 
-  app.use(express.cookieParser(config.sessionSecret || "Hallo"));  
-  app.use(express.session({store: new RedisStore()}));
-  app.use(flash());
+	app.use(express.cookieParser(config.sessionSecret || "Hallo"));	
+	app.use(express.session({store: new RedisStore()}));
+	app.use(flash());
 });
 //test
 

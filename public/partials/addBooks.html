@@ -1,0 +1,56 @@
+<div class="page-header" ng-controller="lookup">
+				<h1>Hello</h1>
+			</div>
+				<div >
+					<div class="lookup-form">
+						<form action="" ng-submit="lookupISBN()" name="ISBNLookupForm" >
+							<label for="">Search for a book</label>
+							<input type="text" name="ISBN" placeholder="search by ISBN name or author" class="form-control">
+							<a href="#" ng-click="showTips = !showTips">Search tips</a>
+							<div ng-show="showTips">
+								<p>To get more specific results</p>
+								<p>When searching by author prepend your search with author: eg author:J.K Rowling</p>
+								<p>When searching by title do title:Harry Potter and the Order of the Pheonix</p>
+								<p>When searching by ISBN do isbn:9780439358071</p>
+							</div>
+						</form>
+					</div>
+					<div ng-show="loading" cool-loader>
+						Loading...
+					</div>
+					<div ng-show="!totalItems && ran">
+						Sorry but I couldn't find anything!
+					</div>
+					<div class="row" ng-show="totalItems" >
+						<div>{{totalItems}} items found</div>
+						<div class="media book-listing  animated" ng-repeat = "book in books" ng-init = "b = book.volumeInfo" ng-animate="{enter:'lightSpeedIn', leave:'lightSpeedOut'}">
+							<div class="pull-left">
+								<img data-lazy="{{b.imageLinks.thumbnail}}" class="media-object" alt="">
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading">{{b.title}}</h4>
+								<p>Author(s)</p>
+								<ul class="unstyled">
+									<li ng-repeat="author in b.authors">{{author}}</li>
+								</ul>
+								<p>
+									{{b.description}}
+								</p>
+								<p>
+									ISBN: {{b.industryIdentifiers[1].identifier}}
+								</p>
+								<button class="btn" ng-click="addToLibrary()" ng-show="!loading && !added">Add to Library</button>
+								<p ng-show="loading" cool-loader></p>
+								<a ng-href="#" class="btn btn-success" disabled ng-show="added">
+									<span class="glyphicon glyphicon-ok" ></span>
+									Added to Library
+									
+								</a>
+								
+							</div>
+
+						</div>
+						
+					</div>
+				</div>
+				
