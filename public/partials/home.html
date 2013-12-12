@@ -1,18 +1,35 @@
-<input type="text" ng-model="search.title" placeholder="search books" ng-init="search = {}">
-{{search}}
+<div class="row">
+	<div class="page-header">
+		<h1>Your Library</h1>
+	</div>
+	<div class="col-md-4">
+		<input type="text" ng-model="search" placeholder="search books" class="form-control ">
+	</div>
+	
+	<div class="sorting col-md-4">
+		<a href="#" ng-click="order='title'">Sort By Title</a> | <a href="#" ng-click="order='author'">Sort by Author</a>
+	</div>
+	
+</div>
 <div class="row " masonry>
 	
-	<div class="book-listing cover animated pull-left" ng-repeat = "book in library | filter:search.title" masonry-brick>
+	<div class="book-listing cover animated pull-left" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
 		<div class="">
-			<img data-lazy="{{book.imageLinks.thumbnail}}" class="media-object" alt="">
+
+			<img data-lazy="{{book.imageLinks.thumbnail}}"alt="">
 			<div class="details">
+				<div class="triangle-with-shadow"></div>
 				<h4 class="media-heading">{{book.title}}</h4>
 				<p>Author(s)</p>
 				<ul class="unstyled">
 					<li ng-repeat="author in book.authors">{{author}}</li>
 				</ul>
-				<p>
-					{{book.description}}
+				<p ng-init="limit=150">
+					{{book.description | limitTo:limit}} 
+					<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">
+						<span ng-show="limit ==150">Show More</span>
+						<span ng-show="limit != 150">Show Less</span>
+					</a>
 				</p>
 				<p>
 					ISBN: {{book.industryIdentifiers[1].identifier}}

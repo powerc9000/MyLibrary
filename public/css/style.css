@@ -4,12 +4,29 @@
 .book-listing.cover{
 	margin-right:10px;
 	width:15%;
-	min-height:200px;
+	height:200px;
+	position:relative;
+	overflow:visible;
+	text-align:center;
+}
+.book-listing.cover:hover .details{
+	position:absolute;
+	background:white;
+	display:inline-block;
+	top:0;
+	left:100%;
+	text-align:left;
+	z-index:2;
+	width:500px;
+	box-shadow:1px 1px 2px black;
+	padding:10px;
 }
 .book-listing.cover img {
 	max-width:100%;
+
 }
 .book-listing.cover .details{
+	
 	display:none;
 }
 .lookup-form{
