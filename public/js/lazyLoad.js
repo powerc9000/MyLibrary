@@ -59,6 +59,9 @@ window.lazy = (function(){
 			loadIfVisible(el);
 			els.push(el);
 		},
+		reload: function(el){
+			handleScroll();
+		},
 		remove: function(el){
 			els.forEach(function(e, i){
 				if(e === el){

@@ -1,0 +1,27 @@
+<div class="book-listing cover animated list row" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
+		<hr>
+		<div class="col-md-2">
+			<img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType">
+		</div>
+		<div class="col-md-8">
+			<div class="details">
+				<div class="triangle-with-shadow"></div>
+				<h4 class="media-heading">{{book.title}}</h4>
+				<p>Author(s)</p>
+				<ul class="unstyled">
+					<li ng-repeat="author in book.authors">{{author}}</li>
+				</ul>
+				<p ng-init="limit=150">
+					{{book.description | limitTo:limit}} 
+					<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">
+						<span ng-show="limit ==150">Show More</span>
+						<span ng-show="limit != 150">Show Less</span>
+					</a>
+				</p>
+				<p>
+					ISBN: {{book.industryIdentifiers[1].identifier}}
+				</p>
+			</div>
+		</div>
+		
+</div>

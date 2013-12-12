@@ -23,22 +23,29 @@
 					</div>
 					<div class="row" ng-show="totalItems" >
 						<div>{{totalItems}} items found</div>
-						<div class="media book-listing  animated" ng-repeat = "book in books" ng-init = "b = book.volumeInfo">
-							<div class="pull-left">
-								<img data-lazy="{{b.imageLinks.thumbnail}}" class="media-object" alt="">
+						<div class="book-listing list animated row" ng-repeat = "book in books" ng-init = "b = book.volumeInfo">
+							<div class="col-md-2">
+								<img data-lazy="{{b.imageLinks.thumbnail}}">
 							</div>
-							<div class="media-body">
-								<h4 class="media-heading">{{b.title}}</h4>
-								<p>Author(s)</p>
-								<ul class="unstyled">
-									<li ng-repeat="author in b.authors">{{author}}</li>
-								</ul>
-								<p>
-									{{b.description}}
-								</p>
-								<p>
-									ISBN: {{b.industryIdentifiers[1].identifier}}
-								</p>
+							<div class="col-md-8">
+								<div class="details">
+									<div class="triangle-with-shadow"></div>
+									<h4 class="media-heading">{{b.title}}</h4>
+									<p>Author(s)</p>
+									<ul class="unstyled">
+										<li ng-repeat="author in b.authors">{{author}}</li>
+									</ul>
+									<p ng-init="limit=150">
+										{{b.description | limitTo:limit}} 
+										<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="b.description.length > 150">
+											<span ng-show="limit ==150">Show More</span>
+											<span ng-show="limit != 150">Show Less</span>
+										</a>
+									</p>
+									<p>
+										ISBN: {{b.industryIdentifiers[1].identifier}}
+									</p>
+								</div>
 								<button class="btn" ng-click="addToLibrary()" ng-show="!loading && !book.added">Add to Library</button>
 								<p ng-show="loading" cool-loader></p>
 								<a ng-href="#" class="btn btn-success" disabled ng-show="book.added">
@@ -46,9 +53,7 @@
 									Added to Library
 									
 								</a>
-								
 							</div>
-
 						</div>
 						
 					</div>

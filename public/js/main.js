@@ -2,7 +2,7 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 .config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(true);
 	$routeProvider.when("/add", {templateUrl:"/partials/addBooks.html", controller:"lookup"})
-	.when("/", {templateUrl:"/partials/home.html", controller:"home"})
+	.when("/", {templateUrl:"/partials/home.html", controller:"home", reloadOnSearch:false})
 }).run(function($rootScope, $q, $http){
 	var q = $q.defer();	
 	$http.get("/api/books/all").success(function(data){
@@ -31,14 +31,31 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 		}
 	}
 })
-.directive("lazy", function(){
+.directive("lazy", function($timeout){
 	return {
 		link: function(scope, el, attrs){
+			var watcher = attrs.lazyWatch || "books"
 			el.bind("$destroy", function(){
 				lazy.remove(el[0]);
+				console.log("heyo!")
 			});
+			scope.$watch(watcher, function(){
+				$timeout(function(){
+					lazy.register(el[0]);
+				},100)
+				
+			})
 			scope.$watch("books", function(){
-				lazy.register(el[0]);
+				$timeout(function(){
+					lazy.register(el[0]);
+				},100)
+				
+			})
+			scope.$watch("order", function(){
+				$timeout(function(){
+					lazy.reload();
+				},100)
+				
 			})
 		}
 	}
@@ -61,8 +78,13 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 		})
 	}
 })
-function home($scope){
+function home($scope, $location){
 	$scope.order = "title"
+	$scope.viewType=$location.search()["list-view"] || "grid";
+	$scope.setViewType = function(type){
+		$scope.viewType = type;
+		$location.search("list-view", type);
+	}
 }
 function lookup($scope, $http, addBook){
 	$scope.book = {};

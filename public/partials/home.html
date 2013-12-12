@@ -9,32 +9,19 @@
 	<div class="sorting col-md-4">
 		<a href="#" ng-click="order='title'">Sort By Title</a> | <a href="#" ng-click="order='author'">Sort by Author</a>
 	</div>
-	
-</div>
-<div class="row " masonry>
-	
-	<div class="book-listing cover animated pull-left" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
-		<div class="">
-
-			<img data-lazy="{{book.imageLinks.thumbnail}}"alt="">
-			<div class="details">
-				<div class="triangle-with-shadow"></div>
-				<h4 class="media-heading">{{book.title}}</h4>
-				<p>Author(s)</p>
-				<ul class="unstyled">
-					<li ng-repeat="author in book.authors">{{author}}</li>
-				</ul>
-				<p ng-init="limit=150">
-					{{book.description | limitTo:limit}} 
-					<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">
-						<span ng-show="limit ==150">Show More</span>
-						<span ng-show="limit != 150">Show Less</span>
-					</a>
-				</p>
-				<p>
-					ISBN: {{book.industryIdentifiers[1].identifier}}
-				</p>
-			</div>
-		</div>
+	<div class="pull-right">
+		<a href="#" ng-click="setViewType('grid')">Grid View</a> | <a href="#" ng-click="setViewType('list')">List View</a>
 	</div>
+</div>
+
+<div class="row " masonry>
+	<div ng-switch="viewType">
+		<div ng-switch-when="grid">
+			<ng-include src="'/partials/booksGridView.html'"></ng-include>
+		</div ng-switch-when>
+		<div ng-switch-when="list">
+			<ng-include src="'/partials/booksListView.html'"></ng-include>
+		</div ng-switch-when>
+	</div ng-switch>
+	
 </div>

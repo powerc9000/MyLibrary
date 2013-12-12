@@ -13,15 +13,28 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-animate.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-route.min.js"></script>
 		
-		<script src="/js/lazyLoad.js"></script>
-		<script src="/js/main.js"></script>
+		
 
 	</head>
 	<body>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">My Library</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a ng-href="/">Home</a></li>
+					<li><a ng-href="/add">Add Books</a></li>
+				</ul>
+			</div>
+			
+		</nav>
 		<div class="container">
 			<ng-view></ng-view>
 			
 		</div>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.min.js"></script>
+		<script src="/js/lazyLoad.js"></script>
+		<script src="/js/main.js"></script>
 	</body>
 </html>

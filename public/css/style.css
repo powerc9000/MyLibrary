@@ -1,7 +1,7 @@
 .book-listing{
 	margin-top:20px;
 }
-.book-listing.cover{
+.grid.book-listing.cover{
 	margin-right:10px;
 	width:15%;
 	height:200px;
@@ -9,7 +9,7 @@
 	overflow:visible;
 	text-align:center;
 }
-.book-listing.cover:hover .details{
+.grid.book-listing.cover:hover .details{
 	position:absolute;
 	background:white;
 	display:inline-block;
@@ -25,7 +25,7 @@
 	max-width:100%;
 
 }
-.book-listing.cover .details{
+.grid.book-listing.cover .details{
 	
 	display:none;
 }
