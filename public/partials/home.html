@@ -1,3 +1,23 @@
-<div>
-	<h1>pizza {{pizza}}</h1>
+<input type="text" ng-model="search.title" placeholder="search books" ng-init="search = {}">
+{{search}}
+<div class="row " masonry>
+	
+	<div class="book-listing cover animated pull-left" ng-repeat = "book in library | filter:search.title" masonry-brick>
+		<div class="">
+			<img data-lazy="{{book.imageLinks.thumbnail}}" class="media-object" alt="">
+			<div class="details">
+				<h4 class="media-heading">{{book.title}}</h4>
+				<p>Author(s)</p>
+				<ul class="unstyled">
+					<li ng-repeat="author in book.authors">{{author}}</li>
+				</ul>
+				<p>
+					{{book.description}}
+				</p>
+				<p>
+					ISBN: {{book.industryIdentifiers[1].identifier}}
+				</p>
+			</div>
+		</div>
+	</div>
 </div>

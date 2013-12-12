@@ -1,0 +1,18 @@
+{
+  "name": "MyLibrary",
+  "version": "0.0.0",
+  "homepage": "https://github.com/powerc9000/MyLibrary",
+  "authors": [
+    "powerc9000 <clay.murray8@gmail.com>"
+  ],
+  "description": "Home library online software",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+}

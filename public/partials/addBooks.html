@@ -23,7 +23,7 @@
 					</div>
 					<div class="row" ng-show="totalItems" >
 						<div>{{totalItems}} items found</div>
-						<div class="media book-listing  animated" ng-repeat = "book in books" ng-init = "b = book.volumeInfo" ng-animate="{enter:'lightSpeedIn', leave:'lightSpeedOut'}">
+						<div class="media book-listing  animated" ng-repeat = "book in books" ng-init = "b = book.volumeInfo">
 							<div class="pull-left">
 								<img data-lazy="{{b.imageLinks.thumbnail}}" class="media-object" alt="">
 							</div>
@@ -39,9 +39,9 @@
 								<p>
 									ISBN: {{b.industryIdentifiers[1].identifier}}
 								</p>
-								<button class="btn" ng-click="addToLibrary()" ng-show="!loading && !added">Add to Library</button>
+								<button class="btn" ng-click="addToLibrary()" ng-show="!loading && !book.added">Add to Library</button>
 								<p ng-show="loading" cool-loader></p>
-								<a ng-href="#" class="btn btn-success" disabled ng-show="added">
+								<a ng-href="#" class="btn btn-success" disabled ng-show="book.added">
 									<span class="glyphicon glyphicon-ok" ></span>
 									Added to Library
 									

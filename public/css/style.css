@@ -1,6 +1,17 @@
 .book-listing{
 	margin-top:20px;
 }
+.book-listing.cover{
+	margin-right:10px;
+	width:15%;
+	min-height:200px;
+}
+.book-listing.cover img {
+	max-width:100%;
+}
+.book-listing.cover .details{
+	display:none;
+}
 .lookup-form{
 	margin-bottom:20px;
 }

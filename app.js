@@ -1,11 +1,15 @@
-var express = require("express");
-var RedisStore = require('connect-redis')(express)
-var app = express();
-var MemStore = express.session.MemoryStore;
-var router = require("./router");
-var flash = require('connect-flash');
-var config = require("./config")
-var bcrypt = require("bcrypt");
+var express = require("express"),
+	util = require("util");
+	RedisStore = require('connect-redis')(express),
+	router = require("./router"),
+	flash = require('connect-flash'),
+	config = require("./config"),
+	bcrypt = require("bcrypt"),
+	app = express(),
+	MemStore = express.session.MemoryStore;
+
+GLOBAL.Q = require("q");
+
 app.configure(function(){
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
