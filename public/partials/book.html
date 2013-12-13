@@ -1,0 +1,31 @@
+<div class="book-listing cover list row" ng-show="!loading">
+	<div class="col-md-2">
+		<a ng-href="/book/{{book.id}}"><img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class='{checkedout: !book.checkedIn}'></a>
+		
+		<p ng-show="!book.checkedIn">Book is checked out </p>
+	</div>
+	<div class="col-md-8">
+		<div class="details">
+			<div class="triangle-with-shadow"></div>
+			<h4 class="media-heading"><a ng-href="/book/{{book.id}}">{{book.title}}</a></h4>
+			<p>Author(s)</p>
+			<ul class="unstyled">
+				<li ng-repeat="author in book.authors">{{author}}</li>
+			</ul>
+			<p ng-init="limit=150">
+				{{book.description | limitTo:limit}} 
+				<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">
+					<span ng-show="limit ==150">Show More</span>
+					<span ng-show="limit != 150">Show Less</span>
+				</a>
+			</p>
+			<p>
+				ISBN: {{book.industryIdentifiers[1].identifier}}
+			</p>
+		</div>
+		<div class="well">
+			<a href="#" class="btn btn-primary" ng-show="book.checkedIn" ng-click="checkout(book)">Check out</a>
+			<a href="#" class="btn btn-primary" ng-show="!book.checkedIn" ng-click="checkin(book)">Check in</a>
+		</div>
+	</div>
+</div>

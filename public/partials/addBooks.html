@@ -31,10 +31,7 @@
 								<div class="details">
 									<div class="triangle-with-shadow"></div>
 									<h4 class="media-heading">{{b.title}}</h4>
-									<p>Author(s)</p>
-									<ul class="unstyled">
-										<li ng-repeat="author in b.authors">{{author}}</li>
-									</ul>
+									<div ng-include="'/partials/bookAuthors.html'"></div>
 									<p ng-init="limit=150">
 										{{b.description | limitTo:limit}} 
 										<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="b.description.length > 150">

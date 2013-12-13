@@ -3,18 +3,94 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 	$locationProvider.html5Mode(true);
 	$routeProvider.when("/add", {templateUrl:"/partials/addBooks.html", controller:"lookup"})
 	.when("/", {templateUrl:"/partials/home.html", controller:"home", reloadOnSearch:false})
+	.when("/book/:bookId", 
+		{
+			templateUrl:"/partials/book.html", 
+			controller:"bookSingle"
+		}
+	)
+	.when("/author/:author", {templateUrl:"/partials/home.html", controller:"authorSingle"})
 }).run(function($rootScope, $q, $http){
-	var q = $q.defer();	
+	var q = $q.defer();
+	console.log("promise")
+	$rootScope.dataLoaded = q.promise;
 	$http.get("/api/books/all").success(function(data){
+		console.log("run ran")
 		$rootScope.library = data;
 		q.resolve();
 	})
 
 	return q.promise;
 })
+.factory("loader", function($rootScope){
+	return {
+		show: function(){
+			$rootScope.loading = true;
+		},
+		hide: function(){
+			$rootScope.loading = false;
+		}
+	}
+})
 .factory("addBook", function(){
 	return function(book){
 		$rootScope.library.push(book);
+	}
+})
+.factory("checkout", function($http){
+	return function(book){
+		$http.get("/api/book/"+book.id+"/checkout")
+		.success(function(){
+			alertify.log("Book has been checked out successfully");
+			book.checkedIn = 0;
+		}).error(function(message){
+			alertify.alert(message);
+		})
+	}
+})
+.factory("checkin", function($http){
+	return function(book){
+		console.log(book)
+		$http.get("/api/book/"+book.id+"/checkin")
+		.success(function(){
+			alertify.log("Book has been checked in successsfully");
+			book.checkedIn = 1;
+		}).error(function(message){
+			alertify.alert(message);
+		})
+	}
+})
+.factory("getBook", function($rootScope, $q){
+	return function(bookId){
+
+		var book,
+			q = $q.defer();
+		$rootScope.dataLoaded.then(function(){
+			$rootScope.library.forEach(function(b){
+				if(b.id === bookId){
+					book = b;
+				}
+			});
+			q.resolve(book);
+		})
+		return q.promise;
+	}
+})
+.factory("getAuthor", function($rootScope, $q){
+	return function(author){
+		var books = [],
+			q = $q.defer();
+			$rootScope.dataLoaded.then(function(){
+				$rootScope.library.forEach(function(b){
+					b.authors && b.authors.forEach(function(a){
+						if(a === author){
+							books.push(b)
+						}
+					})
+				})
+				q.resolve(books);
+			});
+			return q.promise;
 	}
 })
 .animation(".animated", function($timeout){
@@ -37,7 +113,6 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 			var watcher = attrs.lazyWatch || "books"
 			el.bind("$destroy", function(){
 				lazy.remove(el[0]);
-				console.log("heyo!")
 			});
 			scope.$watch(watcher, function(){
 				$timeout(function(){
@@ -78,7 +153,7 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 		})
 	}
 })
-function home($scope, $location){
+function home($scope, $location, checkout){
 	$scope.order = "title"
 	$scope.viewType=$location.search()["list-view"] || "grid";
 	$scope.setViewType = function(type){
@@ -115,7 +190,8 @@ function lookup($scope, $http, addBook){
 		var that = this;
 		this.loading = true;
 		this.book.volumeInfo.id = this.book.id;
-		$http.post("/api/book/add", {book:this.book.volumeInfo}).success(function(){
+		this.book.volumeInfo.checkedIn = 1;
+		$http.post("/api/books/add", {book:this.book.volumeInfo}).success(function(){
 			that.loading = false;
 			that.book.added = true;
 			addBook(that.book.volumeInfo);
@@ -128,4 +204,30 @@ function lookup($scope, $http, addBook){
 			
 		
 	}
+}
+
+function bookSingle($scope, $routeParams, getBook, loader, checkout, checkin){
+	var bookId = $routeParams.bookId;
+	$scope.loading = true;
+	$scope.checkout = checkout;
+	$scope.checkin = checkin;
+	getBook(bookId).then(function(b){
+		$scope.book = b;
+		$scope.loading = false;
+	});
+}
+
+function authorSingle($scope, $routeParams, getAuthor, $location){
+	var author = $routeParams.author;
+	$scope.author = author;
+	$scope.order = "title"
+	$scope.viewType=$location.search()["list-view"] || "grid";
+	$scope.setViewType = function(type){
+		$scope.viewType = type;
+		$location.search("list-view", type);
+	}
+	getAuthor(author).then(function(books){
+		console.log(books)
+		$scope.library = books;
+	});
 }

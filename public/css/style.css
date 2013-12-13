@@ -25,6 +25,9 @@
 	max-width:100%;
 
 }
+.book-listing.cover img.checkedout{
+	opacity:.5;
+}
 .grid.book-listing.cover .details{
 	
 	display:none;

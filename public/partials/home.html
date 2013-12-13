@@ -1,7 +1,10 @@
 <div class="row">
 	<div class="page-header">
-		<h1>Your Library</h1>
+		<h1 ng-show="!author">Your Library</h1>
+		<h1 ng-show="author">Books by {{author}} <small><a href="/">Back to all books</a></small></h1>
+
 	</div>
+	
 	<div class="col-md-4">
 		<input type="text" ng-model="search" placeholder="search books" class="form-control ">
 	</div>

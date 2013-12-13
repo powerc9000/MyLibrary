@@ -1,16 +1,15 @@
 <div class="book-listing cover animated list row" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
 		<hr>
 		<div class="col-md-2">
-			<img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType">
+			<a ng-href="/book/{{book.id}}"><img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class='{checkedout: !book.checkedIn}'></a>
+			
+			<p ng-show="!book.checkedIn">Book is checked out </p>
 		</div>
 		<div class="col-md-8">
 			<div class="details">
 				<div class="triangle-with-shadow"></div>
-				<h4 class="media-heading">{{book.title}}</h4>
-				<p>Author(s)</p>
-				<ul class="unstyled">
-					<li ng-repeat="author in book.authors">{{author}}</li>
-				</ul>
+				<h4 class="media-heading"><a ng-href="/book/{{book.id}}">{{book.title}}</a></h4>
+				<div ng-include="'/partials/bookAuthors.html'"></div>
 				<p ng-init="limit=150">
 					{{book.description | limitTo:limit}} 
 					<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">

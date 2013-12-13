@@ -1,14 +1,11 @@
 <div class="book-listing cover animated pull-left grid" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
 		<div class="">
 
-			<img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType">
+			<img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class="{checkedout: !book.checkedIn}">
 			<div class="details">
-				<div class="triangle-with-shadow"></div>
 				<h4 class="media-heading">{{book.title}}</h4>
-				<p>Author(s)</p>
-				<ul class="unstyled">
-					<li ng-repeat="author in book.authors">{{author}}</li>
-				</ul>
+				<p ng-show="!book.checkedIn">Book is checked out</p>
+				<div ng-include="'/partials/bookAuthors.html'"></div>
 				<p ng-init="limit=150">
 					{{book.description | limitTo:limit}} 
 					<a href="#" ng-click="limit=(limit == 150)? 99999 : 150" ng-show="book.description.length > 150">

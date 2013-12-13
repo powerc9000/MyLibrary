@@ -17,6 +17,22 @@ module.exports = (function(){
 			}, function(message){
 				res.send(message, 406);
 			})
+		},
+		checkout: function(req, res){
+			var bookId = req.params.bookId;
+			db.checkout(bookId).then(function(){
+				res.send(200);
+			}, function(message){
+				res.send(message, 409);
+			})
+		},
+		checkin: function(req, res){
+			var bookId = req.params.bookId;
+			db.checkin(bookId).then(function(){
+				res.send(200);
+			}, function(message){
+				res.send(message, 409);
+			})
 		}
 	};
 	return routes;
