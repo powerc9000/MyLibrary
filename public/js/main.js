@@ -32,9 +32,10 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 		}
 	}
 })
-.factory("addBook", function(){
+.factory("addBook", function($rootScope){
 	return function(book){
-		$rootScope.library.push(book);
+			$rootScope.library.push(book);
+		
 	}
 })
 .factory("checkout", function($http){
