@@ -1,12 +1,13 @@
-var Client = require('mongodb').MongoClient,
-	Server = require('mongodb').Server,
-	promise = require("q").defer(),
-	db = promise.promise;
-	Client.connect("mongodb://127.0.0.1:27017/books", function(err, con){
-		promise.resolve(con);
-	})
+
 	
 	module.exports = (function(){
+		var Client = require('mongodb').MongoClient,
+			Server = require('mongodb').Server,
+			promise = require("q").defer(),
+			db = promise.promise;
+			Client.connect("mongodb://127.0.0.1:27017/books", function(err, con){
+				promise.resolve(con);
+			})
 		return{
 			getBooks: function(){
 				var q = Q.defer();

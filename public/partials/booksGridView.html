@@ -1,9 +1,9 @@
 <div class="book-listing cover animated pull-left grid" ng-repeat = "book in library | filter:search | orderBy:order" masonry-brick>
 		<div class="">
 
-			<img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class="{checkedout: !book.checkedIn}">
+			<a ng-href="/book/{{book.id}}"><img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class="{checkedout: !book.checkedIn}"></a>
 			<div class="details">
-				<h4 class="media-heading">{{book.title}}</h4>
+				<h4 class="media-heading"><a ng-href="/book/{{book.id}}">{{book.title}}</a></h4>
 				<p ng-show="!book.checkedIn">Book is checked out</p>
 				<div ng-include="'/partials/bookAuthors.html'"></div>
 				<p ng-init="limit=150">
