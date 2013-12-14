@@ -20,7 +20,8 @@ module.exports = (function(){
 		},
 		checkout: function(req, res){
 			var bookId = req.params.bookId;
-			db.checkout(bookId).then(function(){
+			var name = req.query.name;
+			db.checkout(bookId, name).then(function(){
 				res.send(200);
 			}, function(message){
 				res.send(message, 409);

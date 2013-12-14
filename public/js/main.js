@@ -39,11 +39,13 @@ angular.module("library", ["ngRoute", "ngAnimate"])
 	}
 })
 .factory("checkout", function($http){
-	return function(book){
-		$http.get("/api/book/"+book.id+"/checkout")
+	return function(book, name){
+		console.log("hey")
+		$http.get("/api/book/"+book.id+"/checkout?name="+name)
 		.success(function(){
 			alertify.log("Book has been checked out successfully");
 			book.checkedIn = 0;
+			book.checkedOutTo = name;
 		}).error(function(message){
 			alertify.alert(message);
 		})
@@ -210,6 +212,7 @@ function lookup($scope, $http, addBook){
 function bookSingle($scope, $routeParams, getBook, loader, checkout, checkin){
 	var bookId = $routeParams.bookId;
 	$scope.loading = true;
+	console.log(checkout)
 	$scope.checkout = checkout;
 	$scope.checkin = checkin;
 	getBook(bookId).then(function(b){

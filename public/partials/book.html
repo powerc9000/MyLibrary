@@ -2,7 +2,7 @@
 	<div class="col-md-2">
 		<a ng-href="/book/{{book.id}}"><img data-lazy="{{book.imageLinks.thumbnail}}" data-lazy-watch="viewType" ng-class='{checkedout: !book.checkedIn}'></a>
 		
-		<p ng-show="!book.checkedIn">Book is checked out </p>
+		<p ng-show="!book.checkedIn">Book is checked out to {{book.checkedOutTo}}</p>
 	</div>
 	<div class="col-md-8">
 		<div class="details">
@@ -24,7 +24,16 @@
 			</p>
 		</div>
 		<div class="well">
-			<a href="#" class="btn btn-primary" ng-show="book.checkedIn" ng-click="checkout(book)">Check out</a>
+			<div ng-show="book.checkedIn">
+				<form action="" ng-submit="checkout(book, name)" name="checkoutBookForm" class="form-inline">
+					<div class="form-group">
+						<label for="" class="sr-only">Name</label>
+						<input type="text" name="name" required class="form-control" ng-model="name" placeholder="Name">
+					</div>
+					<button class="btn btn-primary" type="submit">Check out</button>
+				</form>
+			</div>
+			
 			<a href="#" class="btn btn-primary" ng-show="!book.checkedIn" ng-click="checkin(book)">Check in</a>
 		</div>
 	</div>

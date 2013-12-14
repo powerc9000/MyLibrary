@@ -36,13 +36,20 @@
 				});
 				return q.promise;
 			},
-			checkout: function(bookId){
+			checkout: function(bookId, name){
 				var q = Q.defer();
+				if(!bookId){
+					q.reject("Book id not valid");
+					return q.promise;
+				}else if(!name){
+					q.reject("Must supply a name");
+					return q.promise;
+				}
 				db.then(function(client){
 					var c = client.collection("books");
 					c.findOne({id:bookId}, function(err, item){
 						if(item.checkedIn === 1){
-							c.update({id:bookId}, {$set: {checkedIn:0}}, function(err, count){
+							c.update({id:bookId}, {$set: {checkedIn:0, checkedOutTo:name}}, function(err, count){
 								if(err){
 									q.reject("An error occured");
 								}else{
